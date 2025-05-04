@@ -1,11 +1,11 @@
-import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
+import { clerkMiddleware, redirectToSignIn } from "@clerk/nextjs/server";
 import { permit } from "./app/api/authorizer";
 import { NextResponse } from "next/server";
 
 // This example protects all routes including api/trpc routes
 // Please edit this to allow other routes to be public as needed.
 // See https://clerk.com/docs/nextjs/middleware for more information about configuring your middleware
-export default authMiddleware({
+export default clerkMiddleware({
   publicRoutes: ["/api/account/dashboard/health-benefits"],
   afterAuth: async ({ userId, session, isPublicRoute, ...auth }, { nextUrl: { pathname }, url }) => {
     const { protocol, host } = new URL(process.env.APP_URL ? process.env.APP_URL : url);
